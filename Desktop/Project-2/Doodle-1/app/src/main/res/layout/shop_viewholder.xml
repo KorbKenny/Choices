@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:orientation="horizontal"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content">
+    <ImageView
+        android:id="@+id/vhIcon"
+        android:layout_width="100dp"
+        android:layout_height="80dp"/>
+
+    <TextView
+        android:id="@+id/vhName"
+        android:layout_width="200dp"
+        android:layout_height="80dp"
+        android:text="Giant Pair of Gloves"
+        android:fontFamily="casual"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        android:gravity="center"
+        />
+
+    <TextView
+        android:id="@+id/vhPrice"
+        android:layout_width="40dp"
+        android:layout_height="80dp"
+        android:textSize="20sp"
+        android:fontFamily="casual"
+        android:text="16"
+        android:layout_marginLeft="10dp"
+        android:gravity="center"/>
+
+    <ImageView
+        android:id="@+id/vhMoneySign"
+        android:layout_width="30dp"
+        android:layout_height="80dp"/>
+
+</LinearLayout>
