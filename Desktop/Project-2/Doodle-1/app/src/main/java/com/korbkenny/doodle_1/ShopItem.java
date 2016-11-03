@@ -6,15 +6,41 @@ package com.korbkenny.doodle_1;
 
 public class ShopItem {
     private Integer mID;
-    private int mPrice;
+    private int mPrice, mBought;
     private String mName, mType, mColor, mDescription;
 
-    public ShopItem(Integer ID, String name, int price, String type, String color, String description) {
+    public ShopItem(Integer ID, String name, int price, String type, String color, String description, int bought) {
         mID = ID;
         mName = name;
         mPrice = price;
         mType = type;
         mColor = color;
+        mDescription = description;
+        mBought = bought;
+    }
+
+
+    public void setBought(int bought) {
+        mBought = bought;
+    }
+
+    public void setPrice(int price) {
+        mPrice = price;
+    }
+
+    public void setName(String name) {
+        mName = name;
+    }
+
+    public void setType(String type) {
+        mType = type;
+    }
+
+    public void setColor(String color) {
+        mColor = color;
+    }
+
+    public void setDescription(String description) {
         mDescription = description;
     }
 
@@ -40,5 +66,9 @@ public class ShopItem {
 
     public String getDescription() {
         return mDescription;
+    }
+
+    public int getBought() {
+        return mBought;
     }
 }

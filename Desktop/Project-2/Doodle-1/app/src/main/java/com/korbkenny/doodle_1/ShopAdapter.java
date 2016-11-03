@@ -4,6 +4,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -25,8 +26,13 @@ public class ShopAdapter extends RecyclerView.Adapter<ShopViewHolder> {
     @Override
     public void onBindViewHolder(ShopViewHolder holder, int position) {
         //holder.mIcon.setImageResource();
+
+        ArrayList<Integer> icons = SingletonPictures.getInstance().getIcons();
+
+        holder.mIcon.setImageResource(icons.get(position));
         holder.mName.setText(mShopItemList.get(position).getName());
-        holder.mPrice.setText(mShopItemList.get(position).getPrice());
+        holder.mPrice.setText(Integer.toString(mShopItemList.get(position).getPrice()));
+
     }
 
     @Override

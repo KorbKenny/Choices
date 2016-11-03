@@ -13,8 +13,11 @@ import java.util.List;
  */
 
 public class ShopSQLHelper extends SQLiteOpenHelper {
+    private static final String TAG = ShopSQLHelper.class.getCanonicalName();
+
     private static final int DATABASE_VERSION = 1;
-    public static final String DATABASE_NAME = "SHOP_DB";
+
+    public static final String DATABASE_NAME = "DoodleShopItems.db";
     public static final String SHOP_TABLE = "SHOP_TABLE";
 
     public static final String COL_ID = "ID";
@@ -23,17 +26,19 @@ public class ShopSQLHelper extends SQLiteOpenHelper {
     public static final String COL_TYPE = "TYPE";
     public static final String COL_COLOR = "COLOR";
     public static final String COL_DESCRIPTION = "DESCRIPTION";
+    public static final String COL_BOUGHT = "BOUGHT";
 
-    public static final String[] ALL_COLUMNS = {COL_ID,COL_NAME,COL_PRICE,COL_TYPE,COL_COLOR,COL_DESCRIPTION};
+    public static final String[] ALL_COLUMNS = {COL_ID,COL_NAME,COL_PRICE,COL_TYPE,COL_COLOR,COL_DESCRIPTION,COL_BOUGHT};
 
     private static final String CREATE_TABLE =
             "CREATE TABLE " + SHOP_TABLE + "(" +
                     COL_ID + " INTEGER PRIMARY KEY, " +
                     COL_NAME + " TEXT, " +
-                    COL_PRICE + " INT, " +
+                    COL_PRICE + " INTEGER, " +
                     COL_TYPE + " TEXT, " +
                     COL_COLOR + " TEXT, " +
-                    COL_DESCRIPTION + " TEXT)";
+                    COL_DESCRIPTION + " TEXT, " +
+                    COL_BOUGHT + " INTEGER)";
 
     private static ShopSQLHelper mInstance;
 
@@ -75,8 +80,9 @@ public class ShopSQLHelper extends SQLiteOpenHelper {
                 String type = cursor.getString(cursor.getColumnIndex(COL_TYPE));
                 String color = cursor.getString(cursor.getColumnIndex(COL_COLOR));
                 String description = cursor.getString(cursor.getColumnIndex(COL_DESCRIPTION));
+                int bought = cursor.getInt(cursor.getColumnIndex(COL_BOUGHT));
 
-                ShopItem shopItem = new ShopItem(id,name,price,type,color,description);
+                ShopItem shopItem = new ShopItem(id,name,price,type,color,description,bought);
                 itemList.add(shopItem);
                 cursor.moveToNext();
             }

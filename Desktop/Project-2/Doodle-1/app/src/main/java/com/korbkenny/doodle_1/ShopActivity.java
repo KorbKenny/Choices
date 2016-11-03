@@ -5,19 +5,20 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.view.LayoutInflater;
 
 import java.util.List;
 
 public class ShopActivity extends AppCompatActivity {
 
     RecyclerView mRecyclerView;
-    ShopAdapter mShopAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_shop);
+
+        DBAssetHelper dbSetup = new DBAssetHelper(ShopActivity.this);
+        dbSetup.getReadableDatabase();
 
         List<ShopItem> shopItemList = ShopSQLHelper.getmInstance(this).getAllAsList();
 
@@ -29,7 +30,7 @@ public class ShopActivity extends AppCompatActivity {
         Intent intent = getIntent();
 
 
-
-
     }
+
+    public static int[] shopIcons = {R.drawable.emohair_up};
 }
