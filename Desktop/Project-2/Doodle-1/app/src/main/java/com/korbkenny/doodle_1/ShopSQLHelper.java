@@ -42,7 +42,7 @@ public class ShopSQLHelper extends SQLiteOpenHelper {
 
     private static ShopSQLHelper mInstance;
 
-    public static ShopSQLHelper getmInstance(Context context){
+    public static ShopSQLHelper getInstance(Context context){
         if(mInstance == null){
             mInstance = new ShopSQLHelper(context.getApplicationContext());
         }
@@ -90,4 +90,17 @@ public class ShopSQLHelper extends SQLiteOpenHelper {
         cursor.close();
         return itemList;
     };
+
+    public ShopItem getItemID(int id){
+        SQLiteDatabase db = getReadableDatabase();
+
+        Cursor cursor = db.query(SHOP_TABLE, // a. table
+                ALL_COLUMNS, // b. column names
+                COL_ID + " = ?", // c. selections
+                new String[] {String.valueOf(id)}, // d. selections args
+                null, // e. group by
+                null, // f. having
+                null, // g. order by
+                null); // h. limit
+    }
 }

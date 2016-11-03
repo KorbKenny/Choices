@@ -30,6 +30,9 @@ public class ShopActivity extends AppCompatActivity {
         Intent intent = getIntent();
 
 
+
+
+
     }
 
     public static int[] shopIcons = {R.drawable.emohair_up};

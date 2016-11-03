@@ -9,11 +9,9 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import java.util.ArrayList;
-
 public class MainActivity extends AppCompatActivity {
 
-    ImageView mDoodlePic, mDPicHair;
+    ImageView mDoodlePic, dPicHair, dPicHat, dPicShoe, dPicElemental, dPics;
     Button mButton;
     TextView mDoodleName;
 
@@ -28,7 +26,7 @@ public class MainActivity extends AppCompatActivity {
         final int[] dHair = {R.drawable.emohair_up,R.drawable.emohair_down};
 
         mDoodlePic = (ImageView) findViewById(R.id.doodlePic);
-        mDPicHair = (ImageView) findViewById(R.id.dpicHair);
+        dPicHair = (ImageView) findViewById(R.id.dpicHair);
 
 
         mButton = (Button) findViewById(R.id.ButtonShop);
@@ -39,15 +37,14 @@ public class MainActivity extends AppCompatActivity {
             int i = 0;
             public void run() {
                 mDoodlePic.setImageResource(doodle[i]);
-                if(dHair !=null){mDPicHair.setImageResource(dHair[i]);}
+                if(dHair !=null){
+                    dPicHair.setImageResource(dHair[i]);}
                 i++;
                 if(i == 2){i = 0;}
                 handler.postDelayed(this, 1000);
             }
         };
         handler.postDelayed(runnable, 1000);
-
-
 
         mButton.setOnClickListener(new View.OnClickListener() {
             @Override
