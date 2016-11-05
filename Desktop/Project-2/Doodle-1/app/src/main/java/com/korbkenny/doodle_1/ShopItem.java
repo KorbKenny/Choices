@@ -6,10 +6,10 @@ package com.korbkenny.doodle_1;
 
 public class ShopItem {
     private Integer mID;
-    private int mPrice, mBought;
+    private int mPrice, mBought, mIconId;
     private String mName, mType, mColor, mDescription;
 
-    public ShopItem(Integer ID, String name, int price, String type, String color, String description, int bought) {
+    public ShopItem(Integer ID, String name, int price, String type, String color, String description, int bought, int iconId) {
         mID = ID;
         mName = name;
         mPrice = price;
@@ -17,8 +17,12 @@ public class ShopItem {
         mColor = color;
         mDescription = description;
         mBought = bought;
+        mIconId = iconId;
     }
 
+    public int getIconId() {
+        return mIconId;
+    }
 
     public void setBought(int bought) {
         mBought = bought;

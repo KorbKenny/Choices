@@ -1,5 +1,6 @@
 package com.korbkenny.doodle_1;
 
+import android.content.Context;
 import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -16,6 +17,7 @@ import java.util.List;
 public class ShopAdapter extends RecyclerView.Adapter<ShopViewHolder> {
     List<ShopItem> mShopItemList;
 
+
     public ShopAdapter(List<ShopItem> itemList){mShopItemList = itemList;}
 
 
@@ -31,10 +33,13 @@ public class ShopAdapter extends RecyclerView.Adapter<ShopViewHolder> {
 
         ArrayList<Integer> icons = SingletonPictures.getInstance().getIcons();
 
+        List<Integer> ids = ShopSQLHelper.getInstance(holder.mIcon.getContext()).getIds();
 
-        holder.mIcon.setImageResource(icons.get(position));
+
+        holder.mIcon.setImageResource(icons.get(ids.get(position)));
+
         holder.mName.setText(mShopItemList.get(position).getName());
-        holder.mPrice.setText(Integer.toString(mShopItemList.get(position).getPrice()));
+        holder.mPrice.setText(String.valueOf(mShopItemList.get(position).getPrice()));
 
         holder.mLayout.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -50,5 +55,10 @@ public class ShopAdapter extends RecyclerView.Adapter<ShopViewHolder> {
     @Override
     public int getItemCount() {
         return mShopItemList.size();
+    }
+
+    public void replaceData(List<ShopItem> newList){
+        mShopItemList = newList;
+        notifyDataSetChanged();
     }
 }

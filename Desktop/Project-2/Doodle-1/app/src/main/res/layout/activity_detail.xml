@@ -27,8 +27,10 @@
         android:layout_marginTop="15dp"
         android:layout_marginBottom="15dp"
         android:id="@+id/detail_image"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="180dp"
+        android:layout_height="140dp"
+        android:scaleType="fitCenter"
+        android:adjustViewBounds="true"
         app:srcCompat="@drawable/icon26navi"
         android:layout_below="@+id/detail_title"
         android:layout_centerHorizontal="true"
@@ -41,6 +43,7 @@
         android:text="Type: Elemental"
         android:fontFamily="casual"
         android:textStyle="italic"
+        android:textSize="20sp"
         android:gravity="center_horizontal"
         android:layout_below="@id/detail_image"/>
 
@@ -51,6 +54,7 @@
         android:text="Color: Blue"
         android:textStyle="italic"
         android:fontFamily="casual"
+        android:textSize="20sp"
         android:gravity="center_horizontal"
         android:layout_below="@id/detail_type"/>
 
@@ -61,7 +65,7 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/detail_color"
         android:fontFamily="casual"
-        android:textSize="18sp"
+        android:textSize="24sp"
         android:textStyle="bold"
         android:text="Well this is an item tf and is prett, I mean, whatever haiosdfh wjaijfaw hnavi is abuanoduflaoijfisajfsidjfaosijdfaiojsdfioajweifjawioefjaoefjawoeifjaiowejfoaiwjefoawjief"
         android:gravity="center"/>
