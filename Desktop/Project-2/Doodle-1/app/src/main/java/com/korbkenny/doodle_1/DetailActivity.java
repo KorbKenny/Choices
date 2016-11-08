@@ -2,12 +2,17 @@ package com.korbkenny.doodle_1;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import com.korbkenny.doodle_1.Database.ShopSQLHelper;
+import com.korbkenny.doodle_1.Singletons.SingletonCart;
+import com.korbkenny.doodle_1.Singletons.SingletonPictures;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class DetailActivity extends AppCompatActivity {
 
@@ -15,7 +20,9 @@ public class DetailActivity extends AppCompatActivity {
     private TextView mTitle, mType, mColor, mDescription, mPrice;
     private ImageView mIcon;
     private Button mAddToCart;
-
+    private ArrayList<ShopItem> mItemsInCart;
+    private ArrayList<Integer> mIdsInCart;
+    private boolean isInCart;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,11 +42,23 @@ public class DetailActivity extends AppCompatActivity {
         int id = getIntent().getIntExtra(ID_KEY,-1);
         if(id == -1){finish();}
 
-        ShopItem theItem = ShopSQLHelper
+        final ShopItem theItem = ShopSQLHelper
                 .getInstance(this)
                 .getItemByID(id);
 
         if(theItem == null){finish();}
+
+        mItemsInCart = SingletonCart.getInstance().getItemsInCart();
+
+        for (ShopItem item:mItemsInCart) {
+            if(item.getID()==theItem.getID()){
+                isInCart = true;
+            }
+            else {
+                isInCart = false;
+            }
+        }
+
         String pricePlus = "Price: ";
         String typePlus = "Type: ";
         String colorPlus = "Color: ";
@@ -51,6 +70,20 @@ public class DetailActivity extends AppCompatActivity {
 
         ArrayList<Integer> icons = SingletonPictures.getInstance().getIcons();
         mIcon.setImageResource(icons.get(id-1));
+
+        mAddToCart.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(isInCart) {
+                    Toast.makeText(DetailActivity.this, "Already in Cart", Toast.LENGTH_SHORT).show();
+                    finish();
+                } else{
+                    SingletonCart.getInstance().addToCart(theItem);
+                    Toast.makeText(DetailActivity.this, "Added to Cart", Toast.LENGTH_SHORT).show();
+                    finish();
+                }
+            }
+        });
 
     }
 }

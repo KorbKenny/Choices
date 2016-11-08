@@ -1,9 +1,11 @@
-package com.korbkenny.doodle_1;
+package com.korbkenny.doodle_1.Database;
 
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+
+import com.korbkenny.doodle_1.ShopItem;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -100,7 +102,41 @@ public class ShopSQLHelper extends SQLiteOpenHelper {
         }
         cursor.close();
         return itemList;
+    }
+
+    public List<ShopItem> getBought(){
+        SQLiteDatabase db = getReadableDatabase();
+        Cursor cursor = db.query(SHOP_TABLE,
+                ALL_COLUMNS,
+                COL_BOUGHT + " = ?",
+                new String[] {Integer.toString(1)},
+                null,
+                null,
+                null);
+
+        List<ShopItem> itemList = new ArrayList<>();
+
+        if(cursor.moveToFirst()){
+            while(!cursor.isAfterLast()){
+                Integer id = cursor.getInt(cursor.getColumnIndex(COL_ID));
+                String name = cursor.getString(cursor.getColumnIndex(COL_NAME));
+                int price = cursor.getInt(cursor.getColumnIndex(COL_PRICE));
+                String type = cursor.getString(cursor.getColumnIndex(COL_TYPE));
+                String color = cursor.getString(cursor.getColumnIndex(COL_COLOR));
+                String description = cursor.getString(cursor.getColumnIndex(COL_DESCRIPTION));
+                int bought = cursor.getInt(cursor.getColumnIndex(COL_BOUGHT));
+                int iconid = cursor.getInt(cursor.getColumnIndex(COL_ICONID));
+
+
+                ShopItem shopItem = new ShopItem(id,name,price,type,color,description,bought,iconid);
+                itemList.add(shopItem);
+                cursor.moveToNext();
+            }
+        }
+        cursor.close();
+        return itemList;
     };
+
 
     public ShopItem getItemByID(int id){
         SQLiteDatabase db = getReadableDatabase();

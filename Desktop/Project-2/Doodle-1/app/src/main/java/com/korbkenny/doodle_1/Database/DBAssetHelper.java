@@ -1,4 +1,4 @@
-package com.korbkenny.doodle_1;
+package com.korbkenny.doodle_1.Database;
 
 import android.content.Context;
 

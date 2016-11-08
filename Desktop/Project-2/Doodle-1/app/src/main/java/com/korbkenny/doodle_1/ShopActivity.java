@@ -11,13 +11,25 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
 import android.view.Menu;
 import android.view.MenuInflater;
+import android.view.View;
+import android.widget.ImageView;
+import android.widget.TextView;
+import android.widget.Toast;
+
+import com.korbkenny.doodle_1.Database.DBAssetHelper;
+import com.korbkenny.doodle_1.Database.ShopSQLHelper;
+import com.korbkenny.doodle_1.Singletons.SingletonCurrentCash;
 
 import java.util.List;
 
 public class ShopActivity extends AppCompatActivity {
 
+    ImageView mCartButton;
+    TextView mCurrentCash;
     RecyclerView mRecyclerView;
     ShopAdapter mShopAdapter;
+    List<ShopItem> mShopItemList;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,20 +39,27 @@ public class ShopActivity extends AppCompatActivity {
         DBAssetHelper dbSetup = new DBAssetHelper(ShopActivity.this);
         dbSetup.getReadableDatabase();
 
-        List<ShopItem> shopItemList = ShopSQLHelper.getInstance(this).getAllAsList();
+        mShopItemList = ShopSQLHelper.getInstance(this).getAllAsList();
 
-        mShopAdapter = new ShopAdapter(shopItemList);
+        mCartButton = (ImageView)findViewById(R.id.checkoutbutton);
+        mCartButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(ShopActivity.this,CartActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        mCurrentCash = (TextView)findViewById(R.id.shopMoney);
+        mCurrentCash.setText(Integer.toString(SingletonCurrentCash.getInstance().getCash()));
+
+        mShopAdapter = new ShopAdapter(mShopItemList);
         mRecyclerView = (RecyclerView)findViewById(R.id.recyclerView);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this,LinearLayoutManager.VERTICAL,false);
         mRecyclerView.setLayoutManager(linearLayoutManager);
         mRecyclerView.setAdapter(mShopAdapter);
 
         Intent intent = getIntent();
-
-
-
-
-
     }
 
     @Override
@@ -68,10 +87,8 @@ public class ShopActivity extends AppCompatActivity {
         if(Intent.ACTION_SEARCH.equals(intent.getAction())){
             String query = intent.getStringExtra(SearchManager.QUERY);
             List<ShopItem> searchList = ShopSQLHelper.getInstance(this).searchQuery(query);
-
             mShopAdapter.replaceData(searchList);
-        }
+            }
     }
 
-    public static int[] shopIcons = {R.drawable.emohair_up};
 }

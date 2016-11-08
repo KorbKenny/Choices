@@ -1,11 +1,13 @@
 package com.korbkenny.doodle_1;
 
-import android.content.Context;
 import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
+import com.korbkenny.doodle_1.Database.ShopSQLHelper;
+import com.korbkenny.doodle_1.Singletons.SingletonPictures;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -32,12 +34,9 @@ public class ShopAdapter extends RecyclerView.Adapter<ShopViewHolder> {
         //holder.mIcon.setImageResource();
 
         ArrayList<Integer> icons = SingletonPictures.getInstance().getIcons();
-
         List<Integer> ids = ShopSQLHelper.getInstance(holder.mIcon.getContext()).getIds();
 
-
-        holder.mIcon.setImageResource(icons.get(ids.get(position)));
-
+        holder.mIcon.setImageResource(icons.get(mShopItemList.get(position).getIconId()));
         holder.mName.setText(mShopItemList.get(position).getName());
         holder.mPrice.setText(String.valueOf(mShopItemList.get(position).getPrice()));
 

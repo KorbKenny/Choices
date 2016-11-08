@@ -11,9 +11,10 @@ import android.widget.TextView;
 
 public class MainActivity extends AppCompatActivity {
 
-    ImageView mDoodlePic, dPicHair, dPicHat, dPicShoe, dPicElemental, dPics;
+    ImageView mDoodlePic, dPicHair, dPicHat, dPicShoe, dPicElemental, dPicWeapon, dPics;
     Button mButton;
     TextView mDoodleName;
+    int[] dHair, dHat, dShoe, dElemental, dWeapon;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -21,8 +22,6 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         final int[] doodle = {R.drawable.doodle_up,R.drawable.doodle_down};
-        int[] dAccessoryUp = {R.drawable.emohair_up};
-        int[] dAccessoryDown = {R.drawable.emohair_down};
         final int[] dHair = {R.drawable.emohair_up,R.drawable.emohair_down};
 
         mDoodlePic = (ImageView) findViewById(R.id.doodlePic);

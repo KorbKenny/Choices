@@ -1,6 +1,6 @@
-package com.korbkenny.doodle_1;
+package com.korbkenny.doodle_1.Singletons;
 
-import android.content.Context;
+import com.korbkenny.doodle_1.R;
 
 import java.util.ArrayList;
 
