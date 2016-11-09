@@ -1,5 +1,6 @@
 package com.korbkenny.doodle_1.Database;
 
+import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
@@ -93,7 +94,6 @@ public class ShopSQLHelper extends SQLiteOpenHelper {
                 String description = cursor.getString(cursor.getColumnIndex(COL_DESCRIPTION));
                 int bought = cursor.getInt(cursor.getColumnIndex(COL_BOUGHT));
                 int iconid = cursor.getInt(cursor.getColumnIndex(COL_ICONID));
-
 
                 ShopItem shopItem = new ShopItem(id,name,price,type,color,description,bought,iconid);
                 itemList.add(shopItem);
@@ -232,6 +232,26 @@ public class ShopSQLHelper extends SQLiteOpenHelper {
         cursor.close();
         return itemList;
     };
+
+
+    public void changeToBought(ShopItem shopItem){
+        ContentValues values = new ContentValues();
+            values.put(COL_BOUGHT, 1);
+        SQLiteDatabase db = getWritableDatabase();
+        db.update(SHOP_TABLE,values,COL_ID+" = ?",new String[]{Integer.toString(shopItem.getID())});
+        db.close();
+    }
+
+    public void nothingBought(List<ShopItem> shopItemList){
+        ContentValues values = new ContentValues();
+        for (ShopItem item:shopItemList) {
+            values.put(COL_BOUGHT, 0);
+        }
+        SQLiteDatabase db = getWritableDatabase();
+        db.update(SHOP_TABLE,values,null,null);
+        db.close();
+    }
+
 }
 
 

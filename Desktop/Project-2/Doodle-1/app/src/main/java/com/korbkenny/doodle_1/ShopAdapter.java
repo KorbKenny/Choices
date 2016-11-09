@@ -31,10 +31,8 @@ public class ShopAdapter extends RecyclerView.Adapter<ShopViewHolder> {
 
     @Override
     public void onBindViewHolder(final ShopViewHolder holder, int position) {
-        //holder.mIcon.setImageResource();
 
         ArrayList<Integer> icons = SingletonPictures.getInstance().getIcons();
-        List<Integer> ids = ShopSQLHelper.getInstance(holder.mIcon.getContext()).getIds();
 
         holder.mIcon.setImageResource(icons.get(mShopItemList.get(position).getIconId()));
         holder.mName.setText(mShopItemList.get(position).getName());
@@ -48,7 +46,6 @@ public class ShopAdapter extends RecyclerView.Adapter<ShopViewHolder> {
                 view.getContext().startActivity(intent);
             }
         });
-
     }
 
     @Override
@@ -58,6 +55,11 @@ public class ShopAdapter extends RecyclerView.Adapter<ShopViewHolder> {
 
     public void replaceData(List<ShopItem> newList){
         mShopItemList = newList;
+        notifyDataSetChanged();
+    }
+
+    public void updateData(List<ShopItem> updatedList){
+        mShopItemList = updatedList;
         notifyDataSetChanged();
     }
 }

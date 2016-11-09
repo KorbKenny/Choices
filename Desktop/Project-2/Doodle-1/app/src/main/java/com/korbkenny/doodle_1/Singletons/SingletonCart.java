@@ -5,6 +5,7 @@ import android.widget.Toast;
 import com.korbkenny.doodle_1.ShopItem;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by KorbBookProReturns on 11/7/16.
@@ -30,8 +31,21 @@ public class SingletonCart {
         }
     }
 
+    public int getTotal(List<ShopItem> list){
+        int total = 0;
+        for (ShopItem item:list
+             ) {
+            total += item.getPrice();
+        }
+        return total;
+    }
+
     public void removeFromCart(ShopItem itemToRemove){
         mItemsInCart.remove(itemToRemove);
+    }
+
+    public void removeAllFromCart(){
+       mItemsInCart.clear();
     }
 
     public ArrayList<ShopItem> getItemsInCart(){

@@ -37,8 +37,6 @@ public class DetailActivity extends AppCompatActivity {
         mIcon = (ImageView)findViewById(R.id.detail_image);
         mAddToCart = (Button)findViewById(R.id.detail_button);
 
-
-
         int id = getIntent().getIntExtra(ID_KEY,-1);
         if(id == -1){finish();}
 
@@ -84,6 +82,5 @@ public class DetailActivity extends AppCompatActivity {
                 }
             }
         });
-
     }
 }

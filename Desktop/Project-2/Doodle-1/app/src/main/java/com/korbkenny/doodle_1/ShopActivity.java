@@ -12,9 +12,9 @@ import android.support.v7.widget.SearchView;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.korbkenny.doodle_1.Database.DBAssetHelper;
 import com.korbkenny.doodle_1.Database.ShopSQLHelper;
@@ -24,11 +24,15 @@ import java.util.List;
 
 public class ShopActivity extends AppCompatActivity {
 
+    final int REQUEST_CODE = 12345;
+
     ImageView mCartButton;
     TextView mCurrentCash;
     RecyclerView mRecyclerView;
     ShopAdapter mShopAdapter;
     List<ShopItem> mShopItemList;
+    String mQuery;
+
 
 
     @Override
@@ -46,7 +50,7 @@ public class ShopActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(ShopActivity.this,CartActivity.class);
-                startActivity(intent);
+                startActivityForResult(intent,REQUEST_CODE);
             }
         });
 
@@ -63,18 +67,49 @@ public class ShopActivity extends AppCompatActivity {
     }
 
     @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if(requestCode == REQUEST_CODE){
+            if(resultCode == RESULT_OK){
+                String resultData = data.getStringExtra("key");
+                if (resultData.equals("key")) {
+                    mShopItemList = ShopSQLHelper.getInstance(ShopActivity.this).getAllAsList();
+                    mShopAdapter.replaceData(mShopItemList);
+                }
+            }
+        }
+    }
+
+    @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.options_menu, menu);
 
         SearchManager searchManager =
                 (SearchManager) getSystemService(Context.SEARCH_SERVICE);
-        SearchView searchView =
+        final SearchView searchView =
                 (SearchView) menu.findItem(R.id.search).getActionView();
         ComponentName componentName = new ComponentName(this,ShopActivity.class);
         searchView.setSearchableInfo(searchManager.getSearchableInfo(componentName));
 
+        final ImageView searchExit = (ImageView) searchView.findViewById(R.id.search_close_btn);
+        searchExit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                EditText et = (EditText)findViewById(R.id.search_src_text);
+                searchView.onActionViewCollapsed();
+                mShopAdapter.replaceData(mShopItemList);
+            }
+        });
+
         return true;
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        mCurrentCash = (TextView)findViewById(R.id.shopMoney);
+        mCurrentCash.setText(Integer.toString(SingletonCurrentCash.getInstance().getCash()));
+
     }
 
     @Override
@@ -84,11 +119,16 @@ public class ShopActivity extends AppCompatActivity {
     }
 
     private void handleIntent(Intent intent){
-        if(Intent.ACTION_SEARCH.equals(intent.getAction())){
-            String query = intent.getStringExtra(SearchManager.QUERY);
-            List<ShopItem> searchList = ShopSQLHelper.getInstance(this).searchQuery(query);
-            mShopAdapter.replaceData(searchList);
+        if(Intent.ACTION_SEARCH.equals(intent.getAction())) {
+            mQuery = intent.getStringExtra(SearchManager.QUERY);
+            List<ShopItem> searchList = ShopSQLHelper.getInstance(this).searchQuery(mQuery);
+            if (intent.getAction().equals("")) {
+                mShopAdapter.replaceData(mShopItemList);
+            } else {
+                mShopAdapter.replaceData(searchList);
             }
+        }
     }
+
 
 }

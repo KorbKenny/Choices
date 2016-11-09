@@ -13,11 +13,15 @@ import android.widget.TextView;
 public class CartViewHolder extends RecyclerView.ViewHolder {
 
     ImageView mIcon, mMoney;
-    TextView mName, mPrice;
+    TextView mName, mPrice, mTextTotal, mTextCurrent, mTextRemaining;
     LinearLayout mLayout;
 
     public CartViewHolder(View itemView) {
         super(itemView);
+
+        mTextTotal = (TextView)itemView.findViewById(R.id.cart_total);
+        mTextTotal = (TextView)itemView.findViewById(R.id.cart_current_cash);
+        mTextRemaining = (TextView)itemView.findViewById(R.id.cart_remaining);
 
         mIcon = (ImageView)itemView.findViewById(R.id.vhIcon);
         mName = (TextView)itemView.findViewById(R.id.vhName);
