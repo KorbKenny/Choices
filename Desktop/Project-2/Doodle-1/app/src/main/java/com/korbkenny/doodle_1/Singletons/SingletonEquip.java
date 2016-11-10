@@ -12,11 +12,11 @@ import java.util.ArrayList;
 
 public class SingletonEquip {
     private static SingletonEquip eInstance;
-    private ArrayList<Integer> eHair;
-    private ArrayList<Integer> eHat;
-    private ArrayList<Integer> eWeapon;
-    private ArrayList<Integer> eShoes;
-    private ArrayList<Integer> eElemental;
+    private ArrayList<Integer> eHair = new ArrayList<>();
+    private ArrayList<Integer> eHat = new ArrayList<>();
+    private ArrayList<Integer> eWeapon = new ArrayList<>();
+    private ArrayList<Integer> eShoes = new ArrayList<>();
+    private ArrayList<Integer> eElemental = new ArrayList<>();
 
     public static SingletonEquip getInstance(){
         if(eInstance == null){
@@ -25,10 +25,36 @@ public class SingletonEquip {
         return eInstance;
     }
 
+    public ArrayList<Integer> getHair() {
+        return eHair;
+    }
+
+    public ArrayList<Integer> getHat() {
+        return eHat;
+    }
+
+    public ArrayList<Integer> getWeapon() {
+        return eWeapon;
+    }
+
+    public ArrayList<Integer> getShoes() {
+        return eShoes;
+    }
+
+    public ArrayList<Integer> getElemental() {
+        return eElemental;
+    }
+
     public void equipSomething(ShopItem item) {
         ArrayList<Integer> upPics = SingletonPictures.getInstance().getUpPics();
         ArrayList<Integer> downPics = SingletonPictures.getInstance().getDownPics();
         String type = item.getType();
+
+//        eHair = new ArrayList<>();
+//        eHat = new ArrayList<>();
+//        eWeapon = new ArrayList<>();
+//        eShoes = new ArrayList<>();
+//        eElemental = new ArrayList<>();
 
         switch (type) {
             case "Hair":

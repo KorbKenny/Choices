@@ -16,7 +16,7 @@ public class SingletonCurrentCash {
     }
 
     private SingletonCurrentCash(){
-        mCash = 12;
+        mCash = 24;
     }
 
     public int getCash(){

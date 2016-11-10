@@ -6,6 +6,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
+import com.korbkenny.doodle_1.Singletons.SingletonEquip;
 import com.korbkenny.doodle_1.Singletons.SingletonPictures;
 
 import java.util.ArrayList;
@@ -29,7 +30,7 @@ public class EquipAdapter extends RecyclerView.Adapter<EquipViewHolder> {
     }
 
     @Override
-    public void onBindViewHolder(EquipViewHolder holder, int position) {
+    public void onBindViewHolder(EquipViewHolder holder, final int position) {
 
         ArrayList<Integer> icons = SingletonPictures.getInstance().getIcons();
 
@@ -38,6 +39,7 @@ public class EquipAdapter extends RecyclerView.Adapter<EquipViewHolder> {
         holder.mImage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                SingletonEquip.getInstance().equipSomething(mShopItemList.get(position));
                 Toast.makeText(view.getContext(), "Equipped", Toast.LENGTH_SHORT).show();
             }
         });
