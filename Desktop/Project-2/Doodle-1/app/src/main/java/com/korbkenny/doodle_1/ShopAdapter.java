@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.korbkenny.doodle_1.Database.ShopSQLHelper;
+import com.korbkenny.doodle_1.Singletons.SingletonIcons;
 import com.korbkenny.doodle_1.Singletons.SingletonPictures;
 
 import java.util.ArrayList;
@@ -18,9 +19,13 @@ import java.util.List;
 
 public class ShopAdapter extends RecyclerView.Adapter<ShopViewHolder> {
     List<ShopItem> mShopItemList;
+    ArrayList<Integer> mIcons;
 
 
-    public ShopAdapter(List<ShopItem> itemList){mShopItemList = itemList;}
+    public ShopAdapter(List<ShopItem> itemList){
+        mShopItemList = itemList;
+        mIcons = SingletonIcons.getInstance().getIcons();
+    }
 
 
     @Override
@@ -32,9 +37,7 @@ public class ShopAdapter extends RecyclerView.Adapter<ShopViewHolder> {
     @Override
     public void onBindViewHolder(final ShopViewHolder holder, int position) {
 
-        ArrayList<Integer> icons = SingletonPictures.getInstance().getIcons();
-
-        holder.mIcon.setImageResource(icons.get(mShopItemList.get(position).getIconId()));
+        holder.mIcon.setImageResource(mIcons.get(mShopItemList.get(position).getIconId()));
         holder.mName.setText(mShopItemList.get(position).getName());
         holder.mPrice.setText(String.valueOf(mShopItemList.get(position).getPrice()));
 

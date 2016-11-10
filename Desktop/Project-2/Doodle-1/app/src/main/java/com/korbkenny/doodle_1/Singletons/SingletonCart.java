@@ -40,10 +40,6 @@ public class SingletonCart {
         return total;
     }
 
-    public void removeFromCart(ShopItem itemToRemove){
-        mItemsInCart.remove(itemToRemove);
-    }
-
     public void removeAllFromCart(){
        mItemsInCart.clear();
     }

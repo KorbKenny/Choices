@@ -65,7 +65,7 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/detail_color"
         android:fontFamily="casual"
-        android:textSize="24sp"
+        android:textSize="20sp"
         android:textStyle="bold"
         android:text="Well this is an item tf and is prett, I mean, whatever haiosdfh wjaijfaw hnavi is abuanoduflaoijfisajfsidjfaosijdfaiojsdfioajweifjawioefjaoefjawoeifjaiowejfoaiwjefoawjief"
         android:gravity="center"/>

@@ -12,33 +12,31 @@
     android:background="#ffffff"
     tools:context="com.korbkenny.doodle_1.MainActivity">
 
-    <TextView
+    <ImageView
         android:id="@+id/Title"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Doodle Boy"
-        android:textSize="40sp"
-        android:fontFamily="casual"
-        android:textStyle="bold"
-        android:gravity="center_horizontal"/>
+        android:src="@drawable/title_doodle_boy_no_flair"
+        android:gravity="center_horizontal"
+        android:layout_centerHorizontal="true"/>
+
     <FrameLayout
         android:id="@+id/doodleFrame"
         android:layout_below="@id/Title"
         android:layout_width="360dp"
         android:layout_height="360dp"
-        android:layout_marginTop="20dp"
         android:layout_centerHorizontal="true">
-
-        <ImageView
-            android:id="@+id/dpicElemental"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"/>
 
          <ImageView
              android:id="@+id/doodlePic"
               android:layout_width="match_parent"
               android:layout_height="match_parent"
               />
+
+        <ImageView
+            android:id="@+id/dpicElemental"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
 
         <ImageView
             android:id="@+id/dpicHair"
@@ -63,25 +61,26 @@
 
 
 </FrameLayout>
-    <Button
+
+    <ImageView
         android:id="@+id/ButtonShop"
-        android:layout_width="100dp"
-        android:layout_height="60dp"
-        android:text="shop"
+        android:layout_width="120dp"
+        android:layout_height="78dp"
+        android:src="@drawable/button_shop"
         android:layout_alignParentBottom="true"
         android:layout_alignParentRight="true"/>
     <Button
         android:id="@+id/ButtonRefresh"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="refresh everything"
+        android:layout_width="10dp"
+        android:layout_height="10dp"
+        android:background="#eeeeee"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"/>
-    <Button
+    <ImageView
         android:id="@+id/ButtonEquip"
-        android:layout_width="100dp"
-        android:layout_height="60dp"
-        android:text="Equip"
+        android:layout_width="120dp"
+        android:layout_height="78dp"
+        android:src="@drawable/button_equip"
         android:layout_alignParentBottom="true"
         android:layout_alignParentLeft="true"
         />

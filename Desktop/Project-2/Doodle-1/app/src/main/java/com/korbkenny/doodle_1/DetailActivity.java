@@ -10,6 +10,7 @@ import android.widget.Toast;
 
 import com.korbkenny.doodle_1.Database.ShopSQLHelper;
 import com.korbkenny.doodle_1.Singletons.SingletonCart;
+import com.korbkenny.doodle_1.Singletons.SingletonIcons;
 import com.korbkenny.doodle_1.Singletons.SingletonPictures;
 
 import java.util.ArrayList;
@@ -21,13 +22,16 @@ public class DetailActivity extends AppCompatActivity {
     private ImageView mIcon;
     private Button mAddToCart;
     private ArrayList<ShopItem> mItemsInCart;
-    private ArrayList<Integer> mIdsInCart;
     private boolean isInCart;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detail);
+
+        ///////////////
+        //   SETUP
+        ///////////////
 
         mTitle = (TextView)findViewById(R.id.detail_title);
         mType = (TextView)findViewById(R.id.detail_type);
@@ -46,6 +50,23 @@ public class DetailActivity extends AppCompatActivity {
 
         if(theItem == null){finish();}
 
+        String pricePlus = "Price: ";
+        String typePlus = "Type: ";
+        String colorPlus = "Color: ";
+        mTitle.setText(theItem.getName());
+        mType.setText(typePlus + theItem.getType());
+        mColor.setText(colorPlus + theItem.getColor());
+        mDescription.setText(theItem.getDescription());
+        mPrice.setText(pricePlus + theItem.getPrice());
+
+        ArrayList<Integer> icons = SingletonIcons.getInstance().getIcons();
+        mIcon.setImageResource(icons.get(id-1));
+
+
+        ///////////////
+        // ADD TO CART
+        ///////////////
+
         mItemsInCart = SingletonCart.getInstance().getItemsInCart();
 
         for (ShopItem item:mItemsInCart) {
@@ -56,18 +77,6 @@ public class DetailActivity extends AppCompatActivity {
                 isInCart = false;
             }
         }
-
-        String pricePlus = "Price: ";
-        String typePlus = "Type: ";
-        String colorPlus = "Color: ";
-        mTitle.setText(theItem.getName());
-        mType.setText(typePlus + theItem.getType());
-        mColor.setText(colorPlus + theItem.getColor());
-        mDescription.setText(theItem.getDescription());
-        mPrice.setText(pricePlus + theItem.getPrice());
-
-        ArrayList<Integer> icons = SingletonPictures.getInstance().getIcons();
-        mIcon.setImageResource(icons.get(id-1));
 
         mAddToCart.setOnClickListener(new View.OnClickListener() {
             @Override

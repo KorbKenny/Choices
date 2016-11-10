@@ -33,19 +33,30 @@ public class ShopActivity extends AppCompatActivity {
     List<ShopItem> mShopItemList;
     String mQuery;
 
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_shop);
 
+        //////////////////
+        // DATABASE SETUP
+        //////////////////
         DBAssetHelper dbSetup = new DBAssetHelper(ShopActivity.this);
         dbSetup.getReadableDatabase();
 
-        mShopItemList = ShopSQLHelper.getInstance(this).getAllAsList();
 
+        ///////////////
+        //   SETUP
+        ///////////////
+        mShopItemList = ShopSQLHelper.getInstance(this).getAllAsList();
+        mCurrentCash = (TextView)findViewById(R.id.shopMoney);
+        mCurrentCash.setText(Integer.toString(SingletonCurrentCash.getInstance().getCash()));
         mCartButton = (ImageView)findViewById(R.id.checkoutbutton);
+
+
+        //////////////////
+        //  BUTTON TO CART
+        //////////////////
         mCartButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -54,18 +65,21 @@ public class ShopActivity extends AppCompatActivity {
             }
         });
 
-        mCurrentCash = (TextView)findViewById(R.id.shopMoney);
-        mCurrentCash.setText(Integer.toString(SingletonCurrentCash.getInstance().getCash()));
 
+        /////////////////
+        // RECYCLER VIEW
+        /////////////////
         mShopAdapter = new ShopAdapter(mShopItemList);
         mRecyclerView = (RecyclerView)findViewById(R.id.recyclerView);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this,LinearLayoutManager.VERTICAL,false);
         mRecyclerView.setLayoutManager(linearLayoutManager);
         mRecyclerView.setAdapter(mShopAdapter);
-
-        Intent intent = getIntent();
     }
 
+
+    //////////////////////////////////////////////
+    // REMOVES ITEMS FROM LIST WHEN THEY'RE BOUGHT
+    //////////////////////////////////////////////
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if(requestCode == REQUEST_CODE){
@@ -79,6 +93,9 @@ public class ShopActivity extends AppCompatActivity {
         }
     }
 
+    ///////////////
+    // SEARCH BAR
+    ///////////////
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
@@ -91,6 +108,7 @@ public class ShopActivity extends AppCompatActivity {
         ComponentName componentName = new ComponentName(this,ShopActivity.class);
         searchView.setSearchableInfo(searchManager.getSearchableInfo(componentName));
 
+        //REPOPULATES DATA WHEN YOU EXIT THE SEARCH
         final ImageView searchExit = (ImageView) searchView.findViewById(R.id.search_close_btn);
         searchExit.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -100,16 +118,7 @@ public class ShopActivity extends AppCompatActivity {
                 mShopAdapter.replaceData(mShopItemList);
             }
         });
-
         return true;
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-        mCurrentCash = (TextView)findViewById(R.id.shopMoney);
-        mCurrentCash.setText(Integer.toString(SingletonCurrentCash.getInstance().getCash()));
-
     }
 
     @Override
@@ -129,6 +138,17 @@ public class ShopActivity extends AppCompatActivity {
             }
         }
     }
+
+    //////////////////////////////
+    // REFRESHES $$ AFTER BOUGHT
+    //////////////////////////////
+    @Override
+    protected void onResume() {
+        super.onResume();
+        mCurrentCash = (TextView)findViewById(R.id.shopMoney);
+        mCurrentCash.setText(Integer.toString(SingletonCurrentCash.getInstance().getCash()));
+    }
+
 
 
 }

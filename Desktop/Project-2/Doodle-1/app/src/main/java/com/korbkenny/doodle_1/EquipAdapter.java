@@ -7,6 +7,7 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.korbkenny.doodle_1.Singletons.SingletonEquip;
+import com.korbkenny.doodle_1.Singletons.SingletonIcons;
 import com.korbkenny.doodle_1.Singletons.SingletonPictures;
 
 import java.util.ArrayList;
@@ -18,10 +19,13 @@ import java.util.List;
 
 public class EquipAdapter extends RecyclerView.Adapter<EquipViewHolder> {
     List<ShopItem> mShopItemList;
+    ArrayList<Integer> mIcons;
 
     public EquipAdapter(List<ShopItem> shopItemList) {
         mShopItemList = shopItemList;
+        mIcons = SingletonIcons.getInstance().getIcons();
     }
+
 
     @Override
     public EquipViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -32,10 +36,7 @@ public class EquipAdapter extends RecyclerView.Adapter<EquipViewHolder> {
     @Override
     public void onBindViewHolder(EquipViewHolder holder, final int position) {
 
-        ArrayList<Integer> icons = SingletonPictures.getInstance().getIcons();
-
-        holder.mImage.setImageResource(icons.get(mShopItemList.get(position).getIconId()));
-
+        holder.mImage.setImageResource(mIcons.get(mShopItemList.get(position).getIconId()));
         holder.mImage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -43,8 +44,6 @@ public class EquipAdapter extends RecyclerView.Adapter<EquipViewHolder> {
                 Toast.makeText(view.getContext(), "Equipped", Toast.LENGTH_SHORT).show();
             }
         });
-
-
     }
 
     @Override

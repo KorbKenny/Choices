@@ -9,6 +9,7 @@ import android.widget.TextView;
 import com.korbkenny.doodle_1.Database.ShopSQLHelper;
 import com.korbkenny.doodle_1.Singletons.SingletonCart;
 import com.korbkenny.doodle_1.Singletons.SingletonCurrentCash;
+import com.korbkenny.doodle_1.Singletons.SingletonIcons;
 import com.korbkenny.doodle_1.Singletons.SingletonPictures;
 
 import java.util.ArrayList;
@@ -22,6 +23,7 @@ public class CartAdapter extends RecyclerView.Adapter<CartViewHolder> {
     List<ShopItem> mCartItemList;
     TextView mTextTotal, mTextCurrent, mTextRemaining;
     int mCashTotal, mCashRemaining;
+    ArrayList<Integer> mIcons;
 
     public CartAdapter(List<ShopItem> itemList, TextView total, TextView current, TextView remaining, int cashTotal){
         mCartItemList = itemList;
@@ -29,9 +31,8 @@ public class CartAdapter extends RecyclerView.Adapter<CartViewHolder> {
         mTextCurrent = current;
         mTextRemaining = remaining;
         mCashTotal = cashTotal;
-
+        mIcons = SingletonIcons.getInstance().getIcons();
     }
-
 
     @Override
     public CartViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -42,14 +43,15 @@ public class CartAdapter extends RecyclerView.Adapter<CartViewHolder> {
     @Override
     public void onBindViewHolder(final CartViewHolder holder, final int position) {
 
-        ArrayList<Integer> icons = SingletonPictures.getInstance().getIcons();
-        List<Integer> ids = ShopSQLHelper.getInstance(holder.mIcon.getContext()).getIds();
-
-        holder.mIcon.setImageResource(icons.get(mCartItemList.get(position).getIconId()));
+        holder.mIcon.setImageResource(mIcons.get(mCartItemList.get(position).getIconId()));
         holder.mName.setText(mCartItemList.get(position).getName());
         holder.mPrice.setText(String.valueOf(mCartItemList.get(position).getPrice()));
 
+
+        ///////////////
         //REMOVE AN ITEM FROM LIST
+        ///////////////
+
         holder.mLayout.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View view) {
@@ -69,17 +71,6 @@ public class CartAdapter extends RecyclerView.Adapter<CartViewHolder> {
                 return true;
             }
         });
-
-
-        holder.mLayout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-            }
-        });
-
-
-
     }
 
     @Override

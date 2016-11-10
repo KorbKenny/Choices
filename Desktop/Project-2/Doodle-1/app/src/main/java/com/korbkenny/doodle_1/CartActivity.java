@@ -33,6 +33,10 @@ public class CartActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_cart);
 
+        ///////////////
+        //SETUP
+        ///////////////
+
         mShopItems = SingletonCart.getInstance().getItemsInCart();
 
         mCash1 = (TextView) findViewById(R.id.cart_current_cash);
@@ -42,8 +46,6 @@ public class CartActivity extends AppCompatActivity {
         for (int i = 0; i < mShopItems.size(); i++) {
             mTotal += mShopItems.get(i).getPrice();
         }
-
-
 
 
         ///////////////

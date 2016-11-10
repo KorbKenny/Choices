@@ -50,12 +50,6 @@ public class SingletonEquip {
         ArrayList<Integer> downPics = SingletonPictures.getInstance().getDownPics();
         String type = item.getType();
 
-//        eHair = new ArrayList<>();
-//        eHat = new ArrayList<>();
-//        eWeapon = new ArrayList<>();
-//        eShoes = new ArrayList<>();
-//        eElemental = new ArrayList<>();
-
         switch (type) {
             case "Hair":
                 eHair.clear();

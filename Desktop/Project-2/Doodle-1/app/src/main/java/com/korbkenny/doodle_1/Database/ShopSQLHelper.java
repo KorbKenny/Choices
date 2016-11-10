@@ -60,7 +60,6 @@ public class ShopSQLHelper extends SQLiteOpenHelper {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
     }
 
-
     @Override
     public void onCreate(SQLiteDatabase db) {
         db.execSQL(CREATE_TABLE);
@@ -71,6 +70,18 @@ public class ShopSQLHelper extends SQLiteOpenHelper {
         db.execSQL("DROP TABLE IF EXISTS " + SHOP_TABLE);
         this.onCreate(db);
     }
+
+    //////////////////////////////
+    //                          //
+    //   SQL HELPER METHODS     //
+    //                          //
+    //////////////////////////////
+
+
+    //////////////////////////////////////////////////////
+    // GET A LIST OF EVERYTHING THAT HASN'T BEEN BOUGHT YET
+    //////////////////////////////////////////////////////
+    // --for shop activity
 
     public List<ShopItem> getAllAsList(){
         SQLiteDatabase db = getReadableDatabase();
@@ -104,6 +115,12 @@ public class ShopSQLHelper extends SQLiteOpenHelper {
         return itemList;
     }
 
+
+    //////////////////////////////////////////////////////
+    // GET A LIST OF EVERYTHING THAT'S BEEN BOUGHT ALREADY
+    //////////////////////////////////////////////////////
+    // --for equip activity
+
     public List<ShopItem> getBought(){
         SQLiteDatabase db = getReadableDatabase();
         Cursor cursor = db.query(SHOP_TABLE,
@@ -127,7 +144,6 @@ public class ShopSQLHelper extends SQLiteOpenHelper {
                 int bought = cursor.getInt(cursor.getColumnIndex(COL_BOUGHT));
                 int iconid = cursor.getInt(cursor.getColumnIndex(COL_ICONID));
 
-
                 ShopItem shopItem = new ShopItem(id,name,price,type,color,description,bought,iconid);
                 itemList.add(shopItem);
                 cursor.moveToNext();
@@ -135,8 +151,13 @@ public class ShopSQLHelper extends SQLiteOpenHelper {
         }
         cursor.close();
         return itemList;
-    };
+    }
 
+
+    //////////////////////////////////////////////////////
+    // RETURNS A SHOPITEM BY TAKING IN THE ID OF THAT ITEM
+    //////////////////////////////////////////////////////
+    // --for detail activity
 
     public ShopItem getItemByID(int id){
         SQLiteDatabase db = getReadableDatabase();
@@ -168,33 +189,12 @@ public class ShopSQLHelper extends SQLiteOpenHelper {
         return null;
     }
 
-    public List<Integer> getIds(){
-        SQLiteDatabase db = getReadableDatabase();
 
-        Cursor cursor = db.query(SHOP_TABLE, // a. table
-                ICONID_COLUMN, // b. column names
-                null,
-                null,
-                null, // e. group by
-                null, // f. having
-                null, // g. order by
-                null); // h. limit
-
-        List<Integer> idList = new ArrayList<>();
-
-        if(cursor.moveToFirst()) {
-            while (!cursor.isAfterLast()) {
-                if(cursor.getInt(cursor.getColumnIndex(COL_BOUGHT)) == 0) {
-                    idList.add(cursor.getInt(cursor.getColumnIndex(COL_ICONID)));
-                    cursor.moveToNext();
-                }else{
-                    cursor.moveToNext();
-                }
-            }
-        }
-        cursor.close();
-        return idList;
-    }
+    //////////////////////////////////////////////////////
+    // RETURNS LIST OF ITEMS THAT MATCH THE SEARCH QUERY
+    // IN THE CATEGORIES OF NAME, TYPE, AND COLOR
+    //////////////////////////////////////////////////////
+    // --for shop activity search bar
 
     public List<ShopItem> searchQuery(String query){
         SQLiteDatabase db = getReadableDatabase();
@@ -231,8 +231,13 @@ public class ShopSQLHelper extends SQLiteOpenHelper {
         }
         cursor.close();
         return itemList;
-    };
+    }
 
+
+    //////////////////////////////////////////////////////
+    // TAKES IN AN ITEM, AND CHANGES IT TO 'BOUGHT'
+    //////////////////////////////////////////////////////
+    // --for cart activity checkout button
 
     public void changeToBought(ShopItem shopItem){
         ContentValues values = new ContentValues();
@@ -242,16 +247,24 @@ public class ShopSQLHelper extends SQLiteOpenHelper {
         db.close();
     }
 
-    public void nothingBought(List<ShopItem> shopItemList){
-        ContentValues values = new ContentValues();
-        for (ShopItem item:shopItemList) {
-            values.put(COL_BOUGHT, 0);
-        }
-        SQLiteDatabase db = getWritableDatabase();
-        db.update(SHOP_TABLE,values,null,null);
-        db.close();
-    }
 
+    //////////////////////////////////////////////////////
+    // TAKES IN A LIST OF SHOPITEMS, AND CHANGES
+    // EACH ITEM INSIDE FROM 'BOUGHT' TO NOT
+    //////////////////////////////////////////////////////
+    // --for main activity refresh everything button
+
+    public void nothingBought(List<ShopItem> shopItemList) {
+        ContentValues values = new ContentValues();
+//        if (!shopItemList.isEmpty()) {
+            for (ShopItem item : shopItemList) {
+                values.put(COL_BOUGHT, 0);
+            }
+            SQLiteDatabase db = getWritableDatabase();
+            db.update(SHOP_TABLE, values, null, null);
+            db.close();
+//        }
+    }
 }
 
 

@@ -24,26 +24,30 @@ public class EquipActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_equip);
 
+        //////////
+        //SETUP
+        //////////
+        getIntent();
         mSave = (Button) findViewById(R.id.ButtonSave);
         mShopItemList = ShopSQLHelper.getInstance(this).getBought();
 
+        //////////
+        //RECYCLER VIEW
+        //////////
         mEquipAdapter = new EquipAdapter(mShopItemList);
         mRecyclerView = (RecyclerView) findViewById(R.id.equipRecyclerView);
         GridLayoutManager gridLayoutManager = new GridLayoutManager(this, 3);
         mRecyclerView.setLayoutManager(gridLayoutManager);
         mRecyclerView.setAdapter(mEquipAdapter);
 
+        //////////
+        // SAVE
+        //////////
         mSave.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 finish();
             }
         });
-
-        getIntent();
-
-
-
-
     }
 }
